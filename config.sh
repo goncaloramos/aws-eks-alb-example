@@ -53,22 +53,23 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
 #Verify that the controller is installed
 kubectl get deployment -n kube-system aws-load-balancer-controller
 
+#Create namespace
+kubectl apply -f namespc.yaml
+
 #Change context to namespace
 kubectl config set-context --current --namespace=hello-world 
 
-#Deploy 2048 game in public subnet
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.3.1/docs/examples/2048/2048_full.yaml
+#Deploy Applications
+kubectl apply -k deploys
 
 #Get Ingress Url
-kubectl get ingress/ingress-2048 -n game-2048
+kubectl get ingress/simple-ingress -n hello-world
 
 #Get Only Ingress Url
-kubectl get ingress/ingress-2048 -n game-2048 -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
+kubectl get ingress/simple-ingress -n hello-world -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
 
 #Delete Cluster Stack
 eksctl delete cluster test-cluster
 
-#503 Service Temporarily Unavailable
-kubectl config set-context --current --namespace=hello-world 
-
-kubectl exec -it <podname> -n <namespace> -- /bin/bash
+#Get inside pod command 
+#kubectl exec -it <podname> -n <namespace> -- /bin/bash
