@@ -31,5 +31,3 @@ spec:
   ports:
     - port: 80
       targetPort: 8080
-
-#TESTAR COM TARGET 80 SEM NAMESPACE E TARGET 8080 COM NAMESPACE

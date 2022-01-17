@@ -3,7 +3,7 @@
  #Create Cluster
  eksctl create cluster \
   --name test-cluster \
-  --region eu-west-1 \
+  --region eu-west-1 #\
   #--nodegroup-name linux-nodes \
   #--node-type t2.micro \
   #--nodes 2
@@ -63,10 +63,10 @@ kubectl config set-context --current --namespace=hello-world
 kubectl apply -k deploys
 
 #Get Ingress Url
-kubectl get ingress/simple-ingress -n hello-world
+kubectl get ingress/fanout-ingress -n hello-world
 
 #Get Only Ingress Url
-kubectl get ingress/simple-ingress -n hello-world -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
+kubectl get ingress/fanout-ingress -n hello-world -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
 
 #Delete Cluster Stack
 eksctl delete cluster test-cluster
